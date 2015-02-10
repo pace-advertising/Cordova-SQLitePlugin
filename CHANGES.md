@@ -1,5 +1,9 @@
 # Changes
 
+## 1.0.4
+
+- Added changes from facine:master for iOS location selection
+
 ## 1.0.3
 
 - Fixed issue with multi-page apps on Android (due to problem when closing & re-opening app)
