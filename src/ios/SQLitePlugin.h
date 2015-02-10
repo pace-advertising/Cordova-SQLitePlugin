@@ -4,6 +4,8 @@
  *
  * This library is available under the terms of the MIT License (2008).
  * See http://opensource.org/licenses/alphabetical for full text.
+ *
+ * Adding changes from https://github.com/facine/ for directory selection
  */
 
 #import <Foundation/Foundation.h>
