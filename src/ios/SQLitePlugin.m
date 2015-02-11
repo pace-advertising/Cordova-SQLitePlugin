@@ -250,7 +250,7 @@ static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** va
         }
         else {
             const char *name = [dbname UTF8String];
-            // NSLog(@"using db name: %@", dbname);
+            NSLog(@"using db name: %@", dbname);
             sqlite3 *db;
 
             if (sqlite3_open(name, &db) != SQLITE_OK) {
@@ -262,7 +262,7 @@ static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** va
                 // if(key != NULL) sqlite3_key(db, key, strlen(key));
                 NSError *error;
                 NSURL *url = [NSURL URLWithString:[dbname stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-                BOOL success = [url setResourceValue:@YES forKey: NSURLIsExcludedFromBackupKey error: &error];
+                BOOL success = [self addSkipBackupAttributeToItemAtURL:url];
                 if(!success){
                 	NSLog(@"KCDM: Error excluding %@ from backup %@", url, error);
                 }
