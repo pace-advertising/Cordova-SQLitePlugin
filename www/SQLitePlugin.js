@@ -52,6 +52,7 @@
     this.openError = openError;
     this.openSuccess || (this.openSuccess = function() {
       console.log("DB opened: " + dbname);
+      console.log("DB path: " + dbpath);
     });
     this.openError || (this.openError = function(e) {
       console.log(e.message);
