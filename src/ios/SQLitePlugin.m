@@ -257,11 +257,15 @@ static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** va
             if (sqlite3_open(name, &db) != SQLITE_OK) {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Unable to open DB"];
                 return;
-            }
-            else {
+            } else {
                 // Extra for SQLCipher:
                 // const char *key = [@"your_key_here" UTF8String];
                 // if(key != NULL) sqlite3_key(db, key, strlen(key));
+                
+                BOOL success = [dbPath setResourceValue:@YES forKey: NSURLIsExcludedFromBackupKey error: &error];
+                if(!success){
+                	NSLog(@"KCDM: Error excluding %@ from backup %@", referenceFolder, error);
+                }
 
 		sqlite3_create_function(db, "regexp", 2, SQLITE_ANY, NULL, &sqlite_regexp, NULL, NULL);
 	
