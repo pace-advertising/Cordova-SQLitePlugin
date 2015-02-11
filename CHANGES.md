@@ -1,9 +1,12 @@
 # Changes
 
+## 1.0.5
+
+- Added addSkipBackupAttributeToItemAtURL to set turn iCloud off db file
+
 ## 1.0.4
 
 - Added changes from facine:master for iOS location selection
-- Added addSkipBackupAttributeToItemAtURL to set turn iCloud off db file
 
 ## 1.0.3
 
