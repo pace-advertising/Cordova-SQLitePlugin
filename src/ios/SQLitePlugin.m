@@ -172,6 +172,8 @@ static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** va
     forKey: NSURLIsExcludedFromBackupKey error: &error];
     if(!success){
         NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+    } else {
+    	NSLog(@"Excluded %@ from backup %@", [URL lastPathComponent], error);
     }
     return success;
 }
