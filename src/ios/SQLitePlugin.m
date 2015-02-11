@@ -260,11 +260,11 @@ static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** va
                 // Extra for SQLCipher:
                 // const char *key = [@"your_key_here" UTF8String];
                 // if(key != NULL) sqlite3_key(db, key, strlen(key));
-                
-                NSURL *url = [NSURL URLWithString:[name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                NSError *error;
+                NSURL *url = [NSURL URLWithString:[dbname stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
                 BOOL success = [url setResourceValue:@YES forKey: NSURLIsExcludedFromBackupKey error: &error];
                 if(!success){
-                	NSLog(@"KCDM: Error excluding %@ from backup %@", referenceFolder, error);
+                	NSLog(@"KCDM: Error excluding %@ from backup %@", url, error);
                 }
 
 		sqlite3_create_function(db, "regexp", 2, SQLITE_ANY, NULL, &sqlite_regexp, NULL, NULL);
