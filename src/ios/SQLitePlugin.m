@@ -163,6 +163,19 @@ static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** va
 @synthesize appCachesPath;
 @synthesize appTmpPath;
 
+-(BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL {
+
+    assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
+    NSError *error = nil;
+
+    BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
+    forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+    }
+    return success;
+}
+
 -(CDVPlugin*) initWithWebView:(UIWebView*)theWebView
 {
     self = (SQLitePlugin*)[super initWithWebView:theWebView];
@@ -205,17 +218,18 @@ static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** va
     //return dbPath;
     if ([path isEqualToString:@"lib"]) {
 	NSString *dbPath = [NSString stringWithFormat:@"%@/%@", appLibPath, dbFile];
-	return dbPath;
     } else if ([path isEqualToString:@"caches"]) {
         NSString *dbPath = [NSString stringWithFormat:@"%@/%@", appCachesPath, dbFile];
-        return dbPath;
     } else if ([path isEqualToString:@"tmp"]) {
         NSString *dbPath = [NSString stringWithFormat:@"%@/%@", appTmpPath, dbFile];
-        return dbPath;
     } else {
         NSString *dbPath = [NSString stringWithFormat:@"%@/%@", appDocsPath, dbFile];
-        return dbPath;
     }
+    BOOL success = [dbPath setResourceValue:@YES forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"KCDM: Error excluding %@ from backup %@", referenceFolder, error);
+    }
+    return dbPath;
 }
 
 -(void)open: (CDVInvokedUrlCommand*)command
